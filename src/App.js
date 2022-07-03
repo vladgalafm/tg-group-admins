@@ -86,6 +86,9 @@ export class App extends Component {
 
             this.stringSession = this.client.session.save();
 
+            this.setState( {
+                searchMatchedGroupName: this.getSearchGroupName( this.state.searchInputValue ),
+            } );
             this.setFetchingState( {
                 fetching: false,
             } );
@@ -157,14 +160,19 @@ export class App extends Component {
 
     handleSearchInputChange( event ) {
         const { value } = event.target;
-        const match = /.*webk\.telegram.*@(?<webClient>.+)$|.*t.me\/(?<shortLink>.+)$|^@(?<userName>.+)$/.exec( value );
 
         this.setState( {
             searchInputValue: value,
-            searchMatchedGroupName: match
-                ? ( match.groups.webClient || match.groups.shortLink || match.groups.userName )
-                : '',
+            searchMatchedGroupName: this.getSearchGroupName( value ),
         } );
+    }
+
+    getSearchGroupName( value ) {
+        const match = /.*webk\.telegram.*@(?<webClient>.+)$|.*t.me\/(?<shortLink>.+)$|^@(?<userName>.+)$/.exec( value );
+
+        return match
+            ? ( match.groups.webClient || match.groups.shortLink || match.groups.userName )
+            : '';
     }
 
     async handleSearchFormSubmit( event ) {
