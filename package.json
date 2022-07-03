@@ -1,6 +1,7 @@
 {
     "name": "td-group-admins",
-    "version": "0.2.0",
+    "version": "0.2.1",
+    "homepage": "https://vladgalafm.github.io/tg-group-admins",
     "private": true,
     "dependencies": {
         "@testing-library/jest-dom": "^5.16.4",
@@ -12,6 +13,8 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
@@ -41,6 +44,7 @@
         "os": false
     },
     "devDependencies": {
+        "gh-pages": "^4.0.0",
         "telegram": "^2.9.7"
     }
 }
