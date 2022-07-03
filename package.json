@@ -1,6 +1,6 @@
 {
     "name": "td-group-admins",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "homepage": "https://vladgalafm.github.io/tg-group-admins",
     "private": true,
     "dependencies": {

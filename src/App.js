@@ -29,6 +29,7 @@ export class App extends Component {
             searchInputValue: localStorage.getItem( STORAGE_NAME.searchInputValue ) || '',
             searchMatchedGroupName: '',
             fetching: false,
+            sessionForceLaunch: false,
         };
 
         this.stringSession = '';
@@ -41,9 +42,11 @@ export class App extends Component {
         }
     }
 
-    // componentDidUpdate() {
-        
-    // }
+    async componentDidUpdate() {
+        if ( this.state.sessionForceLaunch && ! this.state.fetching ) {
+            await this.launchSession();
+        }
+    }
 
     // componentWillUnmount() {
         
@@ -88,12 +91,12 @@ export class App extends Component {
 
             this.setState( {
                 searchMatchedGroupName: this.getSearchGroupName( this.state.searchInputValue ),
+                sessionForceLaunch: false,
             } );
             this.setFetchingState( {
                 fetching: false,
             } );
-
-            console.log( this.stringSession );
+            // console.log( this.stringSession );
         }
         catch ( error ) {
             this.setFetchingState( {
@@ -234,7 +237,7 @@ export class App extends Component {
         }
     }
 
-    handleCredentialsFormSubmit( event ) {
+    async handleCredentialsFormSubmit( event ) {
         event.preventDefault();
 
         this.setState( prevState => {
@@ -252,8 +255,6 @@ export class App extends Component {
                 localStorage.setItem( STORAGE_NAME.apiId, apiIdInputValue );
                 localStorage.setItem( STORAGE_NAME.apiHash, apiHashInputValue );
 
-                this.launchSession();
-
                 return {
                     botTokenInputValue: '',
                     apiIdInputValue: '',
@@ -261,6 +262,7 @@ export class App extends Component {
                     botToken: botTokenInputValue,
                     apiId: parseInt( apiIdInputValue ),
                     apiHash: apiHashInputValue,
+                    sessionForceLaunch: true,
                 };
             }
 
@@ -285,7 +287,7 @@ export class App extends Component {
 
         return (
             <main className='pageContent'>
-                { this.areCredentialsValid.bind( this )
+                { this.areCredentialsValid.apply( this )
                     ? <>
                         <SearchForm
                             isFetching={ fetching }
