@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/tg-group-admins/static/css/main.7d833129.css",
+    "main.js": "/tg-group-admins/static/js/main.c9583b7e.js",
+    "index.html": "/tg-group-admins/index.html",
+    "main.7d833129.css.map": "/tg-group-admins/static/css/main.7d833129.css.map",
+    "main.c9583b7e.js.map": "/tg-group-admins/static/js/main.c9583b7e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7d833129.css",
+    "static/js/main.c9583b7e.js"
+  ]
+}
