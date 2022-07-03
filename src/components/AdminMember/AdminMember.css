@@ -1,0 +1,59 @@
+.adminMember {
+    width: 100%;
+    font-size: 1.6em;
+}
+
+.adminMember:not( :last-of-type ) {
+    margin-bottom: 1.6rem;
+}
+
+.adminMemberInfo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+
+.adminMemberName {
+    padding-right: 2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adminMemberNameWrapper.isBot {
+    position: relative;
+    display: inline-block;
+    padding-right: 2.4rem;
+}
+
+.adminMemberNameWrapper.isBot::after {
+    content: 'bot';
+    position: absolute;
+    top: -.5rem;
+    right: 0;
+    font-size: .8125em;
+    font-weight: 700;
+    color: blue;
+}
+
+.adminMemberRank {
+    display: none;
+}
+
+/* Viewport width - 576+px */
+
+@media ( min-width: 36em ) {
+
+    .adminMemberName {
+        width: 60%;
+    }
+}
+
+/* Viewport width - 768+px */
+
+@media ( min-width: 48em ) {
+
+    .adminMemberName {
+        width: 50%;
+    }
+}

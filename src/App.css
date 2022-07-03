@@ -1,0 +1,43 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%; /* 10px */
+}
+
+body {
+    background: #fff;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+.pageContent {
+    width: 100%;
+}
+
+.linkStyle {
+    color: royalblue;
+}
+
+/* Viewport width - 768+px */
+
+@media ( min-width: 48em ) {
+
+    body {
+        background: #f1f1f1;
+    }
+
+    .pageContent {
+        margin: 0 auto;
+        padding: 3rem;
+        max-width: 80rem;
+    }
+}
