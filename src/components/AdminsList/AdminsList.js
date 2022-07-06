@@ -3,12 +3,21 @@ import { AdminMember } from '../AdminMember/AdminMember';
 import './AdminsList.css';
 
 export const AdminsList = ( {
-    adminsList
+    adminsList,
+    copyToClipboardHandler
 } ) => (
     <section className='adminsListWrapper'>
-        <h1 className='adminsListTitle'>
-            Group Admins list
-        </h1>
+        <div className='adminsListTitleWrapper'>
+            <h1 className='adminsListTitle'>
+                Group Admins list
+            </h1>
+            <button
+                className='adminsListCopyButton'
+                aria-label='Copy admins IDs'
+                title='Copy admins IDs to clipboard'
+                onClick={ copyToClipboardHandler }
+            ></button>
+        </div>
         <ol className='adminsList'>
             { adminsList.map( ( member, index ) => (
                 <AdminMember

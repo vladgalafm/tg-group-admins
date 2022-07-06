@@ -274,6 +274,17 @@ export class App extends Component {
         } );
     }
 
+    handleCopyAdminsToClipboard() {
+        const notBotsAdminsList = this.state.adminsList
+            .filter( ( { bot } ) => ! bot )
+            .map( ( { username } ) => `@${ username }` );
+        const copyText = notBotsAdminsList.join( '\n' );
+
+        navigator.clipboard.writeText( copyText ).then( () => {
+            alert( 'Copied to clipboard' );
+        } );
+    }
+
     render() {
         const {
             botTokenInputValue,
@@ -297,7 +308,10 @@ export class App extends Component {
                             inputChangeHandler={ this.handleSearchInputChange.bind( this ) }
                             resetCredentialsHandler={ this.resetCredentials.bind( this ) }
                         />
-                        { adminsList.length > 0 && <AdminsList adminsList={ adminsList } /> }
+                        { adminsList.length > 0 && <AdminsList
+                            adminsList={ adminsList }
+                            copyToClipboardHandler={ this.handleCopyAdminsToClipboard.bind( this ) }
+                        /> }
                     </>
                     : <Credentials
                         botTokenInputValue={ botTokenInputValue }
