@@ -4,6 +4,8 @@ import { StringSession } from 'telegram/sessions';
 import { SearchForm } from './components/SearchForm/SearchForm';
 import { AdminsList } from './components/AdminsList/AdminsList';
 import { Credentials } from './components/Credentials/Credentials';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 const STORAGE_NAME = {
@@ -34,6 +36,18 @@ export class App extends Component {
 
         this.stringSession = '';
         this.client = null;
+        this.toastDefaultOptions = {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 10000,
+            hideProgressBar: false,
+            progress: undefined,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            theme: 'colored',
+            role: 'alert',
+            className: 'toastAlert',
+        };
     }
 
     async componentDidMount() {
@@ -102,7 +116,10 @@ export class App extends Component {
             this.setFetchingState( {
                 fetching: false,
             } );
-            alert( 'Error: Failed to launch session. Try to reload the page, or enter other credentials.' );
+            toast.error( 'Failed to launch session. Try to reload the page, or enter other credentials.', {
+                ...this.toastDefaultOptions,
+                toastId: 'failedToLaunchSession',
+            } );
         }
     };
 
@@ -137,7 +154,10 @@ export class App extends Component {
             this.setFetchingState( {
                 fetching: false,
             } );
-            alert( 'Error: Failed to end current session. Please, try again.' );
+            toast.error( 'Failed to end current session. Please, try again.', {
+                ...this.toastDefaultOptions,
+                toastId: 'failedToEndSession',
+            } );
         }
     }
 
@@ -186,7 +206,7 @@ export class App extends Component {
         } );
 
         try {
-            /* @link: https://gram.js.org/tl/channels/GetFullChannel */
+            /* @link: https://gram.js.org/tl/channels/GetParticipants */
 
             await this.client.connect();
 
@@ -233,8 +253,20 @@ export class App extends Component {
             this.setFetchingState( {
                 fetching: false,
             } );
-            alert( error );
+            this.showAdminsFetchError( error );
         }
+    }
+
+    showAdminsFetchError( error ) {
+        const match = /^.*(?<channelInvalid>RPCError: 400: CHANNEL_INVALID).*$|^.*(?<channelPrivate>RPCError: 400: CHANNEL_PRIVATE).*$|^.*(?<chatAdminRequired>RPCError: 400: CHAT_ADMIN_REQUIRED).*$/.exec( error );
+        const message = match ?
+            ( match.groups.channelInvalid || match.groups.channelPrivate || match.groups.chatAdminRequired ) :
+            error;
+
+        toast.error( `${ message }`, {
+            ...this.toastDefaultOptions,
+            toastId: 'fetchError',
+        } );
     }
 
     async handleCredentialsFormSubmit( event ) {
@@ -281,7 +313,12 @@ export class App extends Component {
         const copyText = notBotsAdminsList.join( '\n' );
 
         navigator.clipboard.writeText( copyText ).then( () => {
-            alert( 'Copied to clipboard' );
+            toast.success( 'Copied to clipboard', {
+                ...this.toastDefaultOptions,
+                autoClose: 2000,
+                hideProgressBar: true,
+                toastId: 'copiedSuccessfully',
+            } );
         } );
     }
 
@@ -321,6 +358,7 @@ export class App extends Component {
                         submitHandler={ this.handleCredentialsFormSubmit.bind( this ) }
                     />
                 }
+                <ToastContainer limit={ 3 } />
             </main>
         );
     }

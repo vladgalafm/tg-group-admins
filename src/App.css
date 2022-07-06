@@ -28,6 +28,10 @@ body {
     color: royalblue;
 }
 
+.toastAlert {
+    font-size: 1.6em;
+}
+
 /* Viewport width - 768+px */
 
 @media ( min-width: 48em ) {
