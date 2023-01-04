@@ -36,22 +36,18 @@
     color: blue;
 }
 
+.adminMemberUsername {
+    padding-right: .6rem;
+}
+
 .adminMemberRank {
-    display: none;
+    margin-left: auto;
+    color: midnightblue;
 }
 
 /* Viewport width - 576+px */
 
 @media ( min-width: 36em ) {
-
-    .adminMemberName {
-        width: 60%;
-    }
-}
-
-/* Viewport width - 768+px */
-
-@media ( min-width: 48em ) {
 
     .adminMemberName {
         width: 50%;
