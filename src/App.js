@@ -116,10 +116,7 @@ export class App extends Component {
             this.setFetchingState( {
                 fetching: false,
             } );
-            toast.error( 'Failed to launch session. Try to reload the page, or enter other credentials.', {
-                ...this.toastDefaultOptions,
-                toastId: 'failedToLaunchSession',
-            } );
+            this.showSessionLaunchError( error );
         }
     };
 
@@ -255,6 +252,18 @@ export class App extends Component {
             } );
             this.showAdminsFetchError( error );
         }
+    }
+
+    showSessionLaunchError( error ) {
+        const match = /^.*(?<floodWaitError>FloodWaitError: A wait of (\d+) seconds is required).*$/.exec( error );
+        const message = match ?
+            match.groups.floodWaitError :
+            'Failed to launch session. Try to reload the page, or enter other credentials.';
+
+        toast.error( message, {
+            ...this.toastDefaultOptions,
+            toastId: 'failedToLaunchSession',
+        } );
     }
 
     showAdminsFetchError( error ) {
